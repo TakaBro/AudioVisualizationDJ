@@ -1,0 +1,81 @@
+﻿{
+  "bpm": 120,
+  "rows": [
+    {
+      "id": 1,
+      "moment": 1.5,
+      "notes": [
+        {
+          "position": 1,
+          "type": 1
+        },
+        {
+          "position": 2,
+          "type": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "moment": 3,
+      "notes": [
+        {
+          "position": 3,
+          "type": 1
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "moment": 3.5,
+      "notes": [
+        {
+          "position": 4,
+          "type": 1
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "moment": 5,
+      "notes": [
+        {
+          "position": 3,
+          "type": 1
+        },
+        {
+          "position": 4,
+          "type": 1
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "moment": 6,
+      "notes": [
+        {
+          "position": 1,
+          "type": 1
+        },
+        {
+          "position": 3,
+          "type": 1
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "moment": 6.5,
+      "notes": [
+        {
+          "position": 4,
+          "type": 1
+        },
+        {
+          "position": 2,
+          "type": 1
+        }
+      ]
+    }
+  ]
+}
