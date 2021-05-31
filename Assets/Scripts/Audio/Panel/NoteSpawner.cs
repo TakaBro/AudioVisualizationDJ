@@ -45,16 +45,20 @@ public class NoteSpawner : MonoBehaviour
                     switch (JSONReader.musicSheetInJson.rows[_rowsIndex].notes[_notesIndex].position)
                     {
                         case 1:
-                            InstatiateNotePrefab(_notePrefab1);
+                            //InstatiateNotePrefab(_notePrefab1);
+                            GetFromPool("Note1");
                             break;
                         case 2:
-                            InstatiateNotePrefab(_notePrefab2);
+                            //InstatiateNotePrefab(_notePrefab2);
+                            GetFromPool("Note2");
                             break;
                         case 3:
-                            InstatiateNotePrefab(_notePrefab3);
+                            //InstatiateNotePrefab(_notePrefab3);
+                            GetFromPool("Note3");
                             break;
                         case 4:
-                            InstatiateNotePrefab(_notePrefab4);
+                            //InstatiateNotePrefab(_notePrefab4);
+                            GetFromPool("Note4");
                             break;
                         default:
                             //Debug.Log(Input.inputString);
@@ -90,16 +94,20 @@ public class NoteSpawner : MonoBehaviour
         switch (Input.inputString)
         {
             case "1":
-                InstatiateNotePrefab(_notePrefab1);
+                //InstatiateNotePrefab(_notePrefab1);
+                GetFromPool("Note1");
                 break;
             case "2":
-                InstatiateNotePrefab(_notePrefab2);
+                //InstatiateNotePrefab(_notePrefab2);
+                GetFromPool("Note2");
                 break;
             case "3":
-                InstatiateNotePrefab(_notePrefab3);
+                //InstatiateNotePrefab(_notePrefab3);
+                GetFromPool("Note3");
                 break;
             case "4":
-                InstatiateNotePrefab(_notePrefab4);
+                //InstatiateNotePrefab(_notePrefab4);
+                GetFromPool("Note4");
                 break;
             default:
                 //Debug.Log(Input.inputString);
@@ -125,5 +133,17 @@ public class NoteSpawner : MonoBehaviour
         noteChildPrefab.transform.SetParent(gameObject.transform);
         noteChildPrefab.GetComponent<RectTransform>().localPosition = new Vector3(0f, 7f, 0f);
         noteChildPrefab.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+    }
+
+    private void GetFromPool(string tag)
+    {
+        GameObject b = Pool.Instance.Get(tag);
+        if (b != null)
+        {
+            b.transform.SetParent(gameObject.transform);
+            b.GetComponent<RectTransform>().localPosition = new Vector3(0f, 7f, 0f);
+            b.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+            b.SetActive(true);
+        }
     }
 }

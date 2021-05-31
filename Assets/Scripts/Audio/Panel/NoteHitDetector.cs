@@ -32,18 +32,21 @@ public class NoteHitDetector : MonoBehaviour
 
         if (other.gameObject.CompareTag("NoteButton"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            this.gameObject.SetActive(false);
         }
 
-        if (other.gameObject.CompareTag("Note"))
+        if (other.gameObject.CompareTag("Note1") || other.gameObject.CompareTag("Note2") || other.gameObject.CompareTag("Note3") || other.gameObject.CompareTag("Note4"))
         {
             if (lifeTime > other.gameObject.GetComponent<NoteHitDetector>().lifeTime)
             {
-                Destroy(other.gameObject);
+                //Destroy(other.gameObject);
+                other.gameObject.SetActive(false);
             }
             else
             {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                this.gameObject.SetActive(false);
             }
         }
     }
