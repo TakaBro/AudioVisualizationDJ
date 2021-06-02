@@ -17,7 +17,8 @@ public class NoteHitDetector : MonoBehaviour
 
         if (_hasEnteredNoteHitMarker && Input.GetButtonDown(_inputButtonNote))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
             onHit?.Invoke();
         }
     }
