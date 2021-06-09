@@ -6,6 +6,6 @@ using System;
 [Serializable]
 public class MusicSheet
 {
-    public int bpm;
-    public Row[] rows;
+    public float bpm;
+    public List<Note> notes;
 }

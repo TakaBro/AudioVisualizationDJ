@@ -1988,7 +1988,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1029837171}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6d21440695444d4a939f357a8e857fe, type: 3}
   m_Name: 
@@ -2036,8 +2036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6d2ad0901cc9a4f81669529458ae0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jsonFile: {fileID: 4900000, guid: 9ada23f63e32cfc4a850616ef027c8f1, type: 3}
-  jsonString: '{"bpm":120,"rows":[{"id":1,"moment":0.2,"notes":[{"position":1,"type":1},{"position":2,"type":1}]},{"id":2,"moment":5,"notes":[{"position":3,"type":1},{"position":4,"type":1}]},{"id":3,"moment":10,"notes":[{"position":1,"type":1},{"position":3,"type":1}]},{"id":4,"moment":15,"notes":[{"position":4,"type":1},{"position":2,"type":1}]}]}'
+  jsonFile: {fileID: 4900000, guid: 68991b91c99cf4244ac2c43401f1d28e, type: 3}
 --- !u!1 &1250612088
 GameObject:
   m_ObjectHideFlags: 0

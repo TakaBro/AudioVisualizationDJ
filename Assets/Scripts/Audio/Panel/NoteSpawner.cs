@@ -19,7 +19,8 @@ public class NoteSpawner : MonoBehaviour
 
     void Start()
     {
-        timer = 0; _rowsIndex = 0;
+        timer = 0; //_rowsIndex = 0;
+        _notesIndex = 0;
         _hasPrintedIndexRow = false;
         _hasPrintedAllRows = false;
         _beatTempo = _beatTempo / 60f;
@@ -29,20 +30,22 @@ public class NoteSpawner : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (_rowsIndex < JSONReader.musicSheetInJson.rows.Length)
+        if (_notesIndex < JSONReader.musicSheetInJson.notes.Count)
         {
-            if (JSONReader.musicSheetInJson.rows[_rowsIndex].moment <= timer)
+            if (JSONReader.musicSheetInJson.notes[_notesIndex].moment <= timer)
             {
-                Debug.Log("Found ROW: id:" + JSONReader.musicSheetInJson.rows[_rowsIndex].id + " moment:" + JSONReader.musicSheetInJson.rows[_rowsIndex].moment);
-                Debug.Log("TIMER and MOMENT: " + timer + JSONReader.musicSheetInJson.rows[_rowsIndex].moment);
+                Debug.Log("Found NOTE COUNT: " + JSONReader.musicSheetInJson.notes.Count);
+                Debug.Log("Found NOTE: moment: " + JSONReader.musicSheetInJson.notes[_notesIndex].moment+
+                    "position: " + JSONReader.musicSheetInJson.notes[_notesIndex].position +
+                    " type: " + JSONReader.musicSheetInJson.notes[_notesIndex].type);
 
-                for (_notesIndex = 0; _notesIndex < JSONReader.musicSheetInJson.rows[_rowsIndex].notes.Length; _notesIndex++)
+                /*for (_notesIndex = 0; _notesIndex < JSONReader.musicSheetInJson.notes.Count; _notesIndex++)
                 {
-                    Debug.Log("Found NOTE LENGHT: " + JSONReader.musicSheetInJson.rows[_rowsIndex].notes.Length);
-                    Debug.Log("Found NOTE: position: " + JSONReader.musicSheetInJson.rows[_rowsIndex].notes[_notesIndex].position +
-                        " type: " + JSONReader.musicSheetInJson.rows[_rowsIndex].notes[_notesIndex].type);
+                    Debug.Log("Found NOTE LENGHT: " + JSONReader.musicSheetInJson.notes.Count);
+                    Debug.Log("Found NOTE: position: " + JSONReader.musicSheetInJson.notes[_notesIndex].position +
+                        " type: " + JSONReader.musicSheetInJson.notes[_notesIndex].type);*/
 
-                    switch (JSONReader.musicSheetInJson.rows[_rowsIndex].notes[_notesIndex].position)
+                    switch (JSONReader.musicSheetInJson.notes[_notesIndex].position)
                     {
                         case 1:
                             //InstatiateNotePrefab(_notePrefab1);
@@ -64,12 +67,10 @@ public class NoteSpawner : MonoBehaviour
                             //Debug.Log(Input.inputString);
                             break;
                     }
-                }
-                _rowsIndex++;
+                _notesIndex++;
+                //}
             }
         }
-
-        
 
         /*if ((AudioPeer.samples[25] * _sampleSensibility) > 30)
         {
