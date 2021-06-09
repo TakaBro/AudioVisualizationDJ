@@ -19,10 +19,9 @@ public class NoteSpawner : MonoBehaviour
 
     void Start()
     {
-        timer = 0; //_rowsIndex = 0;
-        _notesIndex = 0;
-        _hasPrintedIndexRow = false;
-        _hasPrintedAllRows = false;
+        timer = 0; _notesIndex = 0;
+        //_hasPrintedIndexRow = false;
+        //_hasPrintedAllRows = false;
         _beatTempo = _beatTempo / 60f;
     }
 
@@ -38,12 +37,6 @@ public class NoteSpawner : MonoBehaviour
                 Debug.Log("Found NOTE: moment: " + JSONReader.musicSheetInJson.notes[_notesIndex].moment+
                     "position: " + JSONReader.musicSheetInJson.notes[_notesIndex].position +
                     " type: " + JSONReader.musicSheetInJson.notes[_notesIndex].type);
-
-                /*for (_notesIndex = 0; _notesIndex < JSONReader.musicSheetInJson.notes.Count; _notesIndex++)
-                {
-                    Debug.Log("Found NOTE LENGHT: " + JSONReader.musicSheetInJson.notes.Count);
-                    Debug.Log("Found NOTE: position: " + JSONReader.musicSheetInJson.notes[_notesIndex].position +
-                        " type: " + JSONReader.musicSheetInJson.notes[_notesIndex].type);*/
 
                     switch (JSONReader.musicSheetInJson.notes[_notesIndex].position)
                     {

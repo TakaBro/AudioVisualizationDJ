@@ -14,8 +14,10 @@ public class NoteRecorderEditorWindow : EditorWindow
     private float _barNotes = 16;
     private float _labelWidth = 50f;
     private float _labelHeight = 50f;
-    private string _jsonFileName = "MusicSheetFromNoteRecorder.json";
+    private string _jsonImportFileName = "MusicSheetFromNoteRecorder";
+    private string _jsonExportFileName = "MusicSheetFromNoteRecorder.json";
 
+    public static MusicSheet musicSheetRecordedImport;
     public static MusicSheet musicSheetRecorded = new MusicSheet();
 
     [MenuItem("Window/NoteRecorder")]
@@ -40,36 +42,93 @@ public class NoteRecorderEditorWindow : EditorWindow
     {
         GUISkin skin = GUI.skin;
 
+        BeguinScrollBar();
+
+        DrawJsonImportButton(skin);
+        DrawImputFields();
+        DrawRowLabels(skin);
+        DrawAllNoteLines();
+        DrawJsonExportFileName();
+        DrawGenerateJsonButton();
+        
+        EndScrollBar();
+    }
+
+    private void BeguinScrollBar()
+    {
         EditorGUILayout.BeginVertical();
         _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+    }
 
-        DrawBPMBarDurationFields();
-        DrawRowLabels(skin);
-        DrawAllNotesLines();
-        DrawJsonFileName();
-        DrawGenerateJsonButton();
-
+    private void EndScrollBar()
+    {
         EditorGUILayout.EndScrollView();
         EditorGUILayout.EndVertical();
     }
 
-    private void DrawSpace(GUISkin skin, float labelHeight, float labelWidth)
-    {
-        GUILayout.Button("", skin.label, GUILayout.ExpandWidth(false), GUILayout.MaxHeight(labelHeight), GUILayout.MaxWidth(labelWidth));
-    }
-
-    private void DrawBPMBarDurationFields()
+    private void DrawJsonImportButton(GUISkin skin)
     {
         GUILayout.BeginHorizontal();
-        _bpm = EditorGUILayout.FloatField("BPM = ", _bpm);
+        if (GUILayout.Button("IMPORT JSON", GUILayout.ExpandWidth(false)))
+        {
+            Debug.Log("JSON PATH: " + "JsonFiles/" + _jsonImportFileName);
+            Debug.Log("JSON LOAD: " + JSONReader.LoadTextFromJsonFile("JsonFiles/" + _jsonImportFileName));
+            
+            musicSheetRecordedImport = JsonUtility.FromJson<MusicSheet>(JSONReader.LoadTextFromJsonFile("JsonFiles/" + _jsonImportFileName));
+            //UpdateGUI(skin);
+
+            Debug.Log("Json loaded");
+        }
+        GUILayout.EndHorizontal();
+    }
+
+    private void UpdateGUI(GUISkin skin)
+    {
+        BeguinScrollBar();
+
+        DrawJsonImportButton(skin);
+        DrawImputFields();
+        DrawRowLabels(skin);
+        UpdateNoteButtons();
+        DrawJsonExportFileName();
+        DrawGenerateJsonButton();
+
+        EndScrollBar();
+    }
+
+    private void UpdateNoteButtons()
+    {
+        for (int i = ((int)(_notesColumn * _numberOfBars)); i >= 0; i--)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Label((CalculateBarExecutionTime(_bpm, _barNotes) * i).ToString(), GUILayout.ExpandWidth(false), 
+                GUILayout.MaxHeight(_labelHeight), GUILayout.MaxWidth(_labelWidth));
+            for (int row = 1; row <= _notesColumn; row++)
+            {
+
+                GUILayout.Button(musicSheetRecorded.notes.Exists(note => note.moment == (CalculateBarExecutionTime(_bpm, _barNotes) * i) && note.position == row) ? "X" : "",
+                GUILayout.ExpandWidth(false), GUILayout.MaxHeight(_labelHeight), GUILayout.MaxWidth(_labelWidth));
+            }
+            GUILayout.EndHorizontal();
+        }
+    }
+
+    private void DrawImputFields()
+    {
+        GUILayout.BeginHorizontal();
+        _jsonImportFileName = EditorGUILayout.TextField("Import Json File Name : ", _jsonImportFileName);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        _bpm = EditorGUILayout.FloatField("BPM : ", _bpm);
         GUILayout.EndHorizontal();
         
         GUILayout.BeginHorizontal();
-        _barNotes = EditorGUILayout.FloatField("1/X, X =", _barNotes);
+        _barNotes = EditorGUILayout.FloatField("1/X, X :", _barNotes);
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        _numberOfBars = EditorGUILayout.IntField("Nº of Bars =", _numberOfBars);
+        _numberOfBars = EditorGUILayout.IntField("Nº of Bars :", _numberOfBars);
         GUILayout.EndHorizontal();
     }
 
@@ -85,7 +144,12 @@ public class NoteRecorderEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
     }
 
-    private void DrawAllNotesLines()
+    private void DrawSpace(GUISkin skin, float labelHeight, float labelWidth)
+    {
+        GUILayout.Button("", skin.label, GUILayout.ExpandWidth(false), GUILayout.MaxHeight(labelHeight), GUILayout.MaxWidth(labelWidth));
+    }
+
+    private void DrawAllNoteLines()
     {
         for (int i = ((int)(_notesColumn * _numberOfBars)); i >= 0; i--)
         {
@@ -109,10 +173,10 @@ public class NoteRecorderEditorWindow : EditorWindow
             if (GUILayout.Button(musicSheetRecorded.notes.Exists(note => note.moment == timeInterval && note.position == row) ? "X" : "", 
                 GUILayout.ExpandWidth(false), GUILayout.MaxHeight(labelHeight), GUILayout.MaxWidth(labelWidth)))
             {
-                if (musicSheetRecorded.notes.Exists(note => note.moment == timeInterval && note.position == row + 1))
+                if (musicSheetRecorded.notes.Exists(note => note.moment == timeInterval && note.position == row))
                 {
                     Debug.Log(" - Removed Note: [" + timeInterval + "][" + (row) + "]");
-                    musicSheetRecorded.notes.RemoveAll(note => note.moment == timeInterval && note.position == row + 1);
+                    musicSheetRecorded.notes.RemoveAll(note => note.moment == timeInterval && note.position == row);
                 }
                 else
                 {
@@ -129,10 +193,10 @@ public class NoteRecorderEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
     }
 
-    private void DrawJsonFileName()
+    private void DrawJsonExportFileName()
     {
         GUILayout.BeginHorizontal();
-        _jsonFileName = EditorGUILayout.TextField("JSON File Name = ", _jsonFileName);
+        _jsonExportFileName = EditorGUILayout.TextField("Export Json File Name : ", _jsonExportFileName);
         GUILayout.EndHorizontal();
     }
 
@@ -142,7 +206,7 @@ public class NoteRecorderEditorWindow : EditorWindow
         if (GUILayout.Button("GENERATE JSON", GUILayout.ExpandWidth(false)))
         {
             OrderListByNoteMoment(musicSheetRecorded);
-            ExportFile(_jsonFileName, 
+            ExportFile(_jsonExportFileName, 
                         GenerateJsonString(musicSheetRecorded), 
                         Constants.NOTE_RECORDER_MUSIC_SHEET_JSON);
             Debug.Log("Json created");
