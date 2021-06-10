@@ -65,6 +65,7 @@ public class NoteSpawner : MonoBehaviour
             }
         }
 
+        // AUTO GENERATE NOTES FROM FREQUENCY
         /*if ((AudioPeer.samples[25] * _sampleSensibility) > 30)
         {
             InstatiateNotePrefab(_notePrefab1);

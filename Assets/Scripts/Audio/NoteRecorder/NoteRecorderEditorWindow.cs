@@ -74,43 +74,12 @@ public class NoteRecorderEditorWindow : EditorWindow
             Debug.Log("JSON PATH: " + "JsonFiles/" + _jsonImportFileName);
             Debug.Log("JSON LOAD: " + JSONReader.LoadTextFromJsonFile("JsonFiles/" + _jsonImportFileName));
             
-            musicSheetRecordedImport = JsonUtility.FromJson<MusicSheet>(JSONReader.LoadTextFromJsonFile("JsonFiles/" + _jsonImportFileName));
-            //UpdateGUI(skin);
-
+            musicSheetRecorded = JsonUtility.FromJson<MusicSheet>(JSONReader.LoadTextFromJsonFile("JsonFiles/" + _jsonImportFileName));
             Debug.Log("Json loaded");
+
+            //Debug.Log();
         }
         GUILayout.EndHorizontal();
-    }
-
-    private void UpdateGUI(GUISkin skin)
-    {
-        BeguinScrollBar();
-
-        DrawJsonImportButton(skin);
-        DrawImputFields();
-        DrawRowLabels(skin);
-        UpdateNoteButtons();
-        DrawJsonExportFileName();
-        DrawGenerateJsonButton();
-
-        EndScrollBar();
-    }
-
-    private void UpdateNoteButtons()
-    {
-        for (int i = ((int)(_notesColumn * _numberOfBars)); i >= 0; i--)
-        {
-            GUILayout.BeginHorizontal();
-            GUILayout.Label((CalculateBarExecutionTime(_bpm, _barNotes) * i).ToString(), GUILayout.ExpandWidth(false), 
-                GUILayout.MaxHeight(_labelHeight), GUILayout.MaxWidth(_labelWidth));
-            for (int row = 1; row <= _notesColumn; row++)
-            {
-
-                GUILayout.Button(musicSheetRecorded.notes.Exists(note => note.moment == (CalculateBarExecutionTime(_bpm, _barNotes) * i) && note.position == row) ? "X" : "",
-                GUILayout.ExpandWidth(false), GUILayout.MaxHeight(_labelHeight), GUILayout.MaxWidth(_labelWidth));
-            }
-            GUILayout.EndHorizontal();
-        }
     }
 
     private void DrawImputFields()

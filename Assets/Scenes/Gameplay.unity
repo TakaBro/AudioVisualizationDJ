@@ -1992,7 +1992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca6d2ad0901cc9a4f81669529458ae0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jsonFile: {fileID: 4900000, guid: 68991b91c99cf4244ac2c43401f1d28e, type: 3}
+  _jsonFileName: MusicSheetFromNoteRecorder
 --- !u!1 &1250612088
 GameObject:
   m_ObjectHideFlags: 0
