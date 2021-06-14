@@ -9,7 +9,8 @@ public class ScrollDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        beatTempo = 200 / 60f;
+        beatTempo = MusicTrackData.instance._bpm / 60f;
+        Debug.Log("Music Track Data: bpm = " + MusicTrackData.instance._bpm + " bpm/60 = " + beatTempo);
     }
 
     // Update is called once per frame

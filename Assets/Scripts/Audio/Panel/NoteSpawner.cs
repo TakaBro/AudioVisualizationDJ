@@ -7,10 +7,10 @@ public class NoteSpawner : MonoBehaviour
     [Range(0f, 5f)]
     [SerializeField]
     private float _sampleSensibility;
-    [SerializeField]
+    /*[SerializeField]
     private float _beatTempo;
     [SerializeField]
-    private bool hasStarted, _hasPrintedIndexRow, _hasPrintedAllRows;
+    private bool hasStarted, _hasPrintedIndexRow, _hasPrintedAllRows;*/
     [SerializeField]
     private GameObject _notePrefab1, _notePrefab2, _notePrefab3, _notePrefab4;
 
@@ -22,18 +22,18 @@ public class NoteSpawner : MonoBehaviour
         timer = 0; _notesIndex = 0;
         //_hasPrintedIndexRow = false;
         //_hasPrintedAllRows = false;
-        _beatTempo = _beatTempo / 60f;
+        //_beatTempo = _beatTempo / 60f;
     }
 
     void Update()
     {
         timer += Time.deltaTime;
+        Debug.Log("Timer = " + timer);
 
         if (_notesIndex < JSONReader.musicSheetInJson.notes.Count)
         {
             if (JSONReader.musicSheetInJson.notes[_notesIndex].moment <= timer)
             {
-                Debug.Log("Found NOTE COUNT: " + JSONReader.musicSheetInJson.notes.Count);
                 Debug.Log("Found NOTE: moment: " + JSONReader.musicSheetInJson.notes[_notesIndex].moment+
                     "position: " + JSONReader.musicSheetInJson.notes[_notesIndex].position +
                     " type: " + JSONReader.musicSheetInJson.notes[_notesIndex].type);

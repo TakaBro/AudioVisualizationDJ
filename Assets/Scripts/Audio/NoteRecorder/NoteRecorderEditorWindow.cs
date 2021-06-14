@@ -174,6 +174,7 @@ public class NoteRecorderEditorWindow : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("GENERATE JSON", GUILayout.ExpandWidth(false)))
         {
+            musicSheetRecorded.bpm = _bpm;
             OrderListByNoteMoment(musicSheetRecorded);
             ExportFile(_jsonExportFileName, 
                         GenerateJsonString(musicSheetRecorded), 

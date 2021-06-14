@@ -687,8 +687,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8606fc3d87e85c408f8520d564c5e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeToMusicBegin: 0
+  _timeToMusicBegin: 7
   _videoPlayer: {fileID: 672271685}
+  _audioPlayer: {fileID: 1771962016}
 --- !u!1 &378267135
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,10 +739,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sampleSensibility: 0
-  _beatTempo: 0
-  hasStarted: 0
-  _hasPrintedIndexRow: 0
-  _hasPrintedAllRows: 0
   _notePrefab1: {fileID: 3736233867627847859, guid: f0a5b28b4743e4a4a8412c9a14733ebf,
     type: 3}
   _notePrefab2: {fileID: 7447086676466849601, guid: c333bdd494db1df4ab508b3c69e35930,
@@ -1686,6 +1683,50 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!1 &592258577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 592258579}
+  - component: {fileID: 592258578}
+  m_Layer: 0
+  m_Name: MusicTrackData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &592258578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592258577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a2b40fcdacc31646a2eef195434f24b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bpm: 120
+--- !u!4 &592258579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592258577}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.954703, y: -39.715733, z: 54.60736}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &600007284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1830,7 +1871,7 @@ VideoPlayer:
   - 0.5
   m_Url: 
   m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
+  m_DirectAudioMutes: 01
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 0
   m_SkipOnDrop: 1
@@ -1909,7 +1950,7 @@ Transform:
   m_GameObject: {fileID: 672271684}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: -1, z: 886}
-  m_LocalScale: {x: 2150, y: 1530, z: 1}
+  m_LocalScale: {x: 2560, y: 1440, z: 1}
   m_Children: []
   m_Father: {fileID: 908063000}
   m_RootOrder: 2
@@ -2640,8 +2681,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 3f08c8ca94966374788d01b6d8a937c7,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: de02934400cb0b949a1d51313ecb7e4d, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: e4f5c0af0d936a4428368ee4293a89ed, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

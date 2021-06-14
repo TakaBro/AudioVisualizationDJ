@@ -7,17 +7,24 @@ public class AudioSynchronizer : MonoBehaviour
 {
     [SerializeField] private float _timeToMusicBegin;
     [SerializeField] private VideoPlayer _videoPlayer;
-    private bool _videoHasPlayed = false;
+    [SerializeField] private AudioSource _audioPlayer;
+    private bool _hasPlayed = false;
 
-    // Update is called once per frame
+    void Start()
+    {
+        _timeToMusicBegin = 7 / ((MusicTrackData.instance._bpm / 60) / 2);
+        Debug.Log("_timeToMusicBegin: " + _timeToMusicBegin);
+    }
+
     void Update()
     {
         if (_timeToMusicBegin > 0) _timeToMusicBegin -= Time.deltaTime;
         
-        if (_timeToMusicBegin <= 0 && !_videoHasPlayed)
+        if (_timeToMusicBegin <= 0 && !_hasPlayed)
         {
             _videoPlayer.Play();
-            _videoHasPlayed = true;
+            _audioPlayer.Play();
+            _hasPlayed = true;
         }
     }
 }
