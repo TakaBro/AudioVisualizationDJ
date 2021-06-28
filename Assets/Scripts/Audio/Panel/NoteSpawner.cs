@@ -19,7 +19,8 @@ public class NoteSpawner : MonoBehaviour
 
     void Start()
     {
-        timer = 0; _notesIndex = 0;
+        _notesIndex = 0;
+        timer = 0; 
         //_hasPrintedIndexRow = false;
         //_hasPrintedAllRows = false;
         //_beatTempo = _beatTempo / 60f;
@@ -28,11 +29,10 @@ public class NoteSpawner : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        Debug.Log("Timer = " + timer);
 
         if (_notesIndex < JSONReader.musicSheetInJson.notes.Count)
         {
-            if (JSONReader.musicSheetInJson.notes[_notesIndex].moment <= timer)
+            if (JSONReader.musicSheetInJson.notes[_notesIndex].moment <= timer/*GlobalTimer.instance.musicTimer*/)
             {
                 Debug.Log("Found NOTE: moment: " + JSONReader.musicSheetInJson.notes[_notesIndex].moment+
                     "position: " + JSONReader.musicSheetInJson.notes[_notesIndex].position +

@@ -11,6 +11,8 @@ TagManager:
   - Note3
   - Note4
   - Note
+  - GOODNoteHitMarker
+  - PERFECTNoteHitMarker
   layers:
   - Default
   - TransparentFX

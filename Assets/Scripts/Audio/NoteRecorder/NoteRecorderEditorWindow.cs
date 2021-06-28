@@ -5,11 +5,13 @@ using UnityEditor;
 using Newtonsoft.Json;
 using System.IO;
 
+#if UNITY_EDITOR
 public class NoteRecorderEditorWindow : EditorWindow
 {
     private Vector2 _scrollPos;
     private int _notesColumn = 4;
     private int _numberOfBars = 300;
+    private int _gridDivision = 4;
     private float _bpm = 120;
     private float _barNotes = 16;
     private float _labelWidth = 50f;
@@ -44,10 +46,10 @@ public class NoteRecorderEditorWindow : EditorWindow
 
         BeguinScrollBar();
 
-        DrawJsonImportButton(skin);
-        DrawImputFields();
         DrawRowLabels(skin);
         DrawAllNoteLines();
+        DrawJsonImportButton(skin);
+        DrawInputFields();
         DrawJsonExportFileName();
         DrawGenerateJsonButton();
         
@@ -82,7 +84,7 @@ public class NoteRecorderEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
     }
 
-    private void DrawImputFields()
+    private void DrawInputFields()
     {
         GUILayout.BeginHorizontal();
         _jsonImportFileName = EditorGUILayout.TextField("Import Json File Name : ", _jsonImportFileName);
@@ -98,6 +100,14 @@ public class NoteRecorderEditorWindow : EditorWindow
 
         GUILayout.BeginHorizontal();
         _numberOfBars = EditorGUILayout.IntField("Nº of Bars :", _numberOfBars);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        _gridDivision = EditorGUILayout.IntField("Grid Division :", _gridDivision);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        musicSheetRecorded.musicDurationSecs = EditorGUILayout.FloatField("Music Duration (sec) :", musicSheetRecorded.musicDurationSecs);
         GUILayout.EndHorizontal();
     }
 
@@ -129,7 +139,7 @@ public class NoteRecorderEditorWindow : EditorWindow
 
     private float CalculateBarExecutionTime(float bpm, float barDivision)
     {
-        return (bpm / 60) / barDivision;
+        return ((barDivision / (bpm / 60)) / barDivision) / _gridDivision;
     }
 
     private void DrawNoteLine(float timeInterval, float labelHeight, float labelWidth, int line)
@@ -199,3 +209,4 @@ public class NoteRecorderEditorWindow : EditorWindow
         musicSheet.notes.Sort((x, y) => x.moment.CompareTo(y.moment));
     }
 }
+#endif

@@ -5,35 +5,75 @@ using System;
 
 public class NoteHitDetector : MonoBehaviour
 {
-    public static event Action onHit;
+    public static event Action onEnteredNoteHitMarker, onExitNoteHitMarker, onPerfectPressNote, onGoodPressNote;
     public float lifeTime = 0f;
+    private bool _hasEnteredPerfectNoteHitMarker = false, _hasEnteredGoodNoteHitMarker = false;
 
-    [SerializeField] private string _inputButtonNote;
-    [SerializeField] private bool _hasEnteredNoteHitMarker = false;
+    public float noteParticleXOffset;
+    [SerializeField] private GameObject button, notePerfectParticle, noteGoodParticle, noteGreatComboSign, noteGoodComboSign, noteBadComboSign;
+    [SerializeField] private string buttonNumber;
+
+    private void Start()
+    {
+        button = GameObject.Find("/Canvas/Panel/Buttons/TouchButton (" + buttonNumber + ")");
+
+        //button.GetComponent<IButtonController>().onButtonPressedInsideNoteHitMarker += SetNoteInactive;
+    }
+
+    private void OnDisable()
+    {
+        //button.GetComponent<IButtonController>().onButtonPressedInsideNoteHitMarker -= SetNoteInactive;
+    }
 
     void Update()
     {
         lifeTime += Time.deltaTime;
 
-        if (_hasEnteredNoteHitMarker && Input.GetButtonDown(_inputButtonNote))
+        if (_hasEnteredPerfectNoteHitMarker && button.GetComponent<IButtonController>().ButtonPressingState())
         {
-            //Destroy(gameObject);
-            gameObject.SetActive(false);
-            onHit?.Invoke();
+            onPerfectPressNote.Invoke();
+            SetNoteInactive();
+            //TO DO: Add notesParticles to ObjPool
+            Instantiate(notePerfectParticle, new Vector3(noteParticleXOffset, this.gameObject.GetComponent<Transform>().transform.position.y + 10,
+                                                  this.gameObject.GetComponent<Transform>().transform.position.z), Quaternion.identity);
+            Instantiate(noteGreatComboSign, new Vector3(noteParticleXOffset, this.gameObject.GetComponent<Transform>().transform.position.y + 10,
+                                                  this.gameObject.GetComponent<Transform>().transform.position.z), Quaternion.identity);
         }
+        else if (_hasEnteredGoodNoteHitMarker && button.GetComponent<IButtonController>().ButtonPressingState())
+        {
+            onGoodPressNote.Invoke();
+            SetNoteInactive();
+            Instantiate(noteGoodParticle, new Vector3(noteParticleXOffset, this.gameObject.GetComponent<Transform>().transform.position.y + 8.5f,
+                                                  this.gameObject.GetComponent<Transform>().transform.position.z), Quaternion.identity);
+            Instantiate(noteGoodComboSign, new Vector3(noteParticleXOffset, this.gameObject.GetComponent<Transform>().transform.position.y + 8.5f,
+                                                  this.gameObject.GetComponent<Transform>().transform.position.z), Quaternion.identity);
+        }
+
+    }
+
+    private void SetNoteInactive()
+    {
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("NoteHitMarker"))
+        if (other.gameObject.CompareTag("PERFECTNoteHitMarker"))
         {
-            //Debug.Log("OnTriggerEnter_HitMarker");
-            _hasEnteredNoteHitMarker = true;
+            //Debug.Log("OnTriggerEnter_PERFECTHitMarker");
+            _hasEnteredPerfectNoteHitMarker = true;
+            //onEnteredNoteHitMarker?.Invoke();
+        }
+
+        if (other.gameObject.CompareTag("GOODNoteHitMarker"))
+        {
+            //Debug.Log("OnTriggerEnter_GOODHitMarker");
+            _hasEnteredGoodNoteHitMarker = true;
+            //onEnteredNoteHitMarker?.Invoke();
         }
 
         if (other.gameObject.CompareTag("NoteButton"))
         {
-            //Destroy(gameObject);
             this.gameObject.SetActive(false);
         }
 
@@ -41,12 +81,10 @@ public class NoteHitDetector : MonoBehaviour
         {
             if (lifeTime > other.gameObject.GetComponent<NoteHitDetector>().lifeTime)
             {
-                //Destroy(other.gameObject);
                 other.gameObject.SetActive(false);
             }
             else
             {
-                //Destroy(gameObject);
                 this.gameObject.SetActive(false);
             }
         }
@@ -54,10 +92,18 @@ public class NoteHitDetector : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("NoteHitMarker"))
+        if (other.gameObject.CompareTag("PERFECTNoteHitMarker"))
         {
-            //Debug.Log("OnTriggerEXIT_HitMarker");
-            _hasEnteredNoteHitMarker = false;
+            //Debug.Log("OnTriggerEXIT_PerfectHitMarker");
+            _hasEnteredPerfectNoteHitMarker = false;
+            //onExitNoteHitMarker?.Invoke();
+        }
+
+        if (other.gameObject.CompareTag("GOODNoteHitMarker"))
+        {
+            //Debug.Log("OnTriggerEXIT_GoodHitMarker");
+            _hasEnteredGoodNoteHitMarker = false;
+            //onExitNoteHitMarker?.Invoke();
         }
     }
 }

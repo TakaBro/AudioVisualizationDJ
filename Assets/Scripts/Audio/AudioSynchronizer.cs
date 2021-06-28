@@ -1,18 +1,43 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
 public class AudioSynchronizer : MonoBehaviour
 {
+    public static event Action onMusicBegin;
+
     [SerializeField] private float _timeToMusicBegin;
-    [SerializeField] private VideoPlayer _videoPlayer;
+    [SerializeField] private GameObject _videoPlayer;
     [SerializeField] private AudioSource _audioPlayer;
     private bool _hasPlayed = false;
 
+    private void OnEnable()
+    {
+        GlobalTimer.onMusicEnded += StopVideoPlayer;
+        GlobalTimer.onMusicEnded += StopAudioPlayer;
+    }
+
+    private void OnDisable()
+    {
+        GlobalTimer.onMusicEnded -= StopVideoPlayer;
+        GlobalTimer.onMusicEnded -= StopAudioPlayer;
+    }
+
+    private void StopVideoPlayer()
+    {
+        _videoPlayer.SetActive(false);
+    }
+
+    private void StopAudioPlayer()
+    {
+        _audioPlayer.Stop();
+    }
+
     void Start()
     {
-        _timeToMusicBegin = 7 / ((MusicTrackData.instance._bpm / 60) / 2);
+        _timeToMusicBegin = 7 / ((MusicTrackData.Singleton._bpm / 60) / 2);
         Debug.Log("_timeToMusicBegin: " + _timeToMusicBegin);
     }
 
@@ -22,7 +47,8 @@ public class AudioSynchronizer : MonoBehaviour
         
         if (_timeToMusicBegin <= 0 && !_hasPlayed)
         {
-            _videoPlayer.Play();
+            onMusicBegin.Invoke();
+            _videoPlayer.SetActive(true);
             _audioPlayer.Play();
             _hasPlayed = true;
         }

@@ -7,5 +7,6 @@ using System;
 public class MusicSheet
 {
     public float bpm;
+    public float musicDurationSecs;
     public List<Note> notes;
 }

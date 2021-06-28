@@ -2,24 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicTrackData : MonoBehaviour
+public class MusicTrackData
 {
-    [SerializeField]
     public float _bpm = 120;
-
     public static MusicTrackData instance;
 
-    void Start()
+    private static void Init()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }        
+        instance._bpm = JSONReader.musicSheetInJson.bpm;
     }
 
-    // Update is called once per frame
-    void Update()
+    public static MusicTrackData Singleton
     {
-        
+        get
+        {
+            if (instance == null)
+            {
+                instance = new MusicTrackData();
+                Init();
+            }
+            return instance;
+        }   
     }
 }
