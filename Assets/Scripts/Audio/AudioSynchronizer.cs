@@ -11,6 +11,7 @@ public class AudioSynchronizer : MonoBehaviour
     [SerializeField] private float _timeToMusicBegin;
     [SerializeField] private GameObject _videoPlayer;
     [SerializeField] private AudioSource _audioPlayer;
+    [SerializeField] private MusicTrackData musicData;
     private bool _hasPlayed = false;
 
     private void OnEnable()
@@ -37,7 +38,7 @@ public class AudioSynchronizer : MonoBehaviour
 
     void Start()
     {
-        _timeToMusicBegin = 7 / ((MusicTrackData.Singleton._bpm / 60) / 2);
+        _timeToMusicBegin = 7 / ((musicData._bpm / 60) / 2);
         Debug.Log("_timeToMusicBegin: " + _timeToMusicBegin);
     }
 

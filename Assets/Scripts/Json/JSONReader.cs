@@ -18,7 +18,6 @@ public class JSONReader : MonoBehaviour
     {
         //musicSheetInJson = JsonUtility.FromJson<MusicSheet>(jsonFile.text);
         musicSheetInJson = JsonUtility.FromJson<MusicSheet>(LoadTextFromJsonFile("JsonFiles/" + _jsonFileName));
-
         Debug.Log("Found Music Sheet: " + musicSheetInJson.bpm + " bpm");
 
         for (int i = 0; i < musicSheetInJson.notes.Count; i++)

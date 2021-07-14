@@ -11,7 +11,7 @@ public class GlobalTimer : MonoBehaviour
     public static GlobalTimer instance;
 
     private bool hasStarted = false;
-   
+
     void Start()
     {
         if (instance == null)

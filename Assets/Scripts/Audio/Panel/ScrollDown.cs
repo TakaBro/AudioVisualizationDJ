@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class ScrollDown : MonoBehaviour
 {
-    [SerializeField]
-    private float beatTempo;
-    // Start is called before the first frame update
+    [SerializeField] private float beatTempo;
+    [SerializeField] private MusicTrackData musicData;
+
+
     void Start()
     {
-        beatTempo = MusicTrackData.Singleton._bpm / 60f;
-        Debug.Log("Music Track Data: bpm = " + MusicTrackData.instance._bpm + " bpm/60 = " + beatTempo);
+        beatTempo = musicData._bpm / 60f;
+        Debug.Log("Music Track Data: bpm = " + musicData._bpm + " bpm/60 = " + beatTempo);
     }
 
     // Update is called once per frame
