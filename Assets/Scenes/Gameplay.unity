@@ -1241,7 +1241,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 908063000}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &298751503
 MonoBehaviour:
@@ -1258,6 +1258,7 @@ MonoBehaviour:
   _timeToMusicBegin: 7
   _videoPlayer: {fileID: 672271684}
   _audioPlayer: {fileID: 1771962016}
+  musicData: {fileID: 11400000, guid: 1914e1c705faa204794d65c348cb0e33, type: 2}
 --- !u!1 &378267135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,7 +1270,7 @@ GameObject:
   - component: {fileID: 378267136}
   - component: {fileID: 378267137}
   m_Layer: 5
-  m_Name: NoteHolder
+  m_Name: NoteSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2487,7 +2488,7 @@ Transform:
   m_LocalScale: {x: 1920, y: 1080, z: 1}
   m_Children: []
   m_Father: {fileID: 908063000}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!1 &685902581
 GameObject:
@@ -2702,7 +2703,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 908063000}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &765746696
 MonoBehaviour:
@@ -2716,7 +2717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c589393e2b048214d905ba5bb4e5307e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Got: 1
+  musicPitchController: {fileID: 1771962018}
 --- !u!1 &838073037
 GameObject:
   m_ObjectHideFlags: 0
@@ -2823,12 +2824,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 765746695}
   - {fileID: 298751502}
   - {fileID: 1771962017}
   - {fileID: 672271689}
-  - {fileID: 1169344547}
   - {fileID: 120663753}
-  - {fileID: 765746695}
+  - {fileID: 1169344547}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3037,7 +3038,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 908063000}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1169344548
 MonoBehaviour:
@@ -3052,10 +3053,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jsonFileName: MusicSheetFromNoteRecorder
-  musicSheetInJson:
-    bpm: 0
-    musicDurationSecs: 0
-    notes: []
 --- !u!1 &1250612088
 GameObject:
   m_ObjectHideFlags: 0
@@ -4205,7 +4202,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 3f08c8ca94966374788d01b6d8a937c7,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 840dc54eb1c70d74e9eaf06498a522c9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5f0fc981aaef519499583d2ab6d0b1eb, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -4303,7 +4300,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 908063000}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1771962018
 MonoBehaviour:

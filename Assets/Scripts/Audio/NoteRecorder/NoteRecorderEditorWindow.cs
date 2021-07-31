@@ -57,8 +57,6 @@ public class NoteRecorderEditorWindow : EditorWindow
         DrawJsonExportFileName();
         DrawGenerateJsonButton();
         DrawTrackSpeedChangeButtons();
-
-        
     }
 
     private void BeginScrollBar()
@@ -200,7 +198,7 @@ public class NoteRecorderEditorWindow : EditorWindow
     private void DrawTrackSpeedChangeButtons()
     {
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Music Play Speed: ", GUILayout.ExpandWidth(false), GUILayout.MaxHeight(50), GUILayout.MaxWidth(150));
+        GUILayout.Label("Music Preview Speed: ", GUILayout.ExpandWidth(false), GUILayout.MaxHeight(50), GUILayout.MaxWidth(150));
         if (GUILayout.Button("2X", GUILayout.ExpandWidth(false)))
         {
             noteRecorderEditor.ChangeMusicSpeed(2);
