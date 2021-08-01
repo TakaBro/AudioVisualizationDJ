@@ -22,8 +22,8 @@ public class JSONReader : MonoBehaviour
 
         for (int i = 0; i < musicSheetInJson.notes.Count; i++)
         {
-            Debug.Log("Found NOTE: moment:" + musicSheetInJson.notes[i].moment + " position:" 
-                + musicSheetInJson.notes[i].position + " type:" + musicSheetInJson.notes[i].type);
+            //Debug.Log("Found NOTE: moment:" + musicSheetInJson.notes[i].moment + " position:" 
+            //    + musicSheetInJson.notes[i].position + " type:" + musicSheetInJson.notes[i].type);
         }
     }
 

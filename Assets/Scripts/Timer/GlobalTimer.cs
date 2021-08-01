@@ -31,7 +31,7 @@ public class GlobalTimer : MonoBehaviour
         if (hasStarted)
         {
             musicTimer += Time.deltaTime;
-            Debug.Log("Timer = " + musicTimer);
+            //Debug.Log("Timer = " + musicTimer);
 
             if (musicTimer >= JSONReader.musicSheetInJson.musicDurationSecs)
             {

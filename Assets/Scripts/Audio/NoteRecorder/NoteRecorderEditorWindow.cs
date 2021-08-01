@@ -16,6 +16,7 @@ public class NoteRecorderEditorWindow : EditorWindow
     private float _barNotes = 16;
     private float _labelWidth = 50f;
     private float _labelHeight = 50f;
+    private float executionTimeStamp; int separationTimeStamp;
     private string _jsonImportFileName = "MusicSheetFromNoteRecorder";
     private string _jsonExportFileName = "MusicSheetFromNoteRecorder.json";
     private NoteRecorderEditor noteRecorderEditor;
@@ -131,16 +132,31 @@ public class NoteRecorderEditorWindow : EditorWindow
 
     private void DrawAllNoteLines()
     {
+        separationTimeStamp = (int)(CalculateBarExecutionTime(_bpm, _barNotes) * (_notesColumn * _numberOfBars));
         for (int i = ((int)(_notesColumn * _numberOfBars)); i >= 0; i--)
         {
-            DrawNoteLine(CalculateBarExecutionTime(_bpm, _barNotes) * i,
-            _labelHeight, _labelWidth, i);
+            executionTimeStamp = CalculateBarExecutionTime(_bpm, _barNotes) * i;
+            //Debug.Log(executionTimeStamp + " , " + separationTimeStamp);
+            if (executionTimeStamp == separationTimeStamp && separationTimeStamp != 0)
+            {
+                DrawGuiLine();
+                separationTimeStamp--;
+                //Debug.Log(executionTimeStamp + " == " + separationTimeStamp);
+            }
+            DrawNoteLine(executionTimeStamp, _labelHeight, _labelWidth, i);
         }
     }
 
     private float CalculateBarExecutionTime(float bpm, float barDivision)
     {
         return ((barDivision / (bpm / 60)) / barDivision) / _gridDivision;
+    }
+
+    void DrawGuiLine(int i_height = 3)
+    {
+        Rect rect = EditorGUILayout.GetControlRect(false, i_height);
+        rect.height = i_height;
+        EditorGUI.DrawRect(rect, new Color(0.5f, 0.5f, 0.5f, 1));
     }
 
     private void DrawNoteLine(float timeInterval, float labelHeight, float labelWidth, int line)
