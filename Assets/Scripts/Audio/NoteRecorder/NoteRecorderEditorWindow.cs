@@ -8,6 +8,8 @@ using System.IO;
 #if UNITY_EDITOR
 public class NoteRecorderEditorWindow : EditorWindow
 {
+    public static string _jsonImportFileName = "MusicSheetFromNoteRecorder";
+
     private Vector2 _scrollPos;
     private int _notesColumn = 4;
     private int _numberOfBars = 300;
@@ -17,12 +19,8 @@ public class NoteRecorderEditorWindow : EditorWindow
     private float _labelWidth = 50f;
     private float _labelHeight = 50f;
     private float executionTimeStamp; int separationTimeStamp;
-    private string _jsonImportFileName = "MusicSheetFromNoteRecorder";
     private string _jsonExportFileName = "MusicSheetFromNoteRecorder.json";
-    private NoteRecorderEditor noteRecorderEditor;
-
-    public static MusicSheet musicSheetRecordedImport;
-    public static MusicSheet musicSheetRecorded = new MusicSheet();
+    private NoteRecorder noteRecorder;
 
     [MenuItem("Window/NoteRecorder")]
     static void Init()
@@ -33,15 +31,10 @@ public class NoteRecorderEditorWindow : EditorWindow
 
     private void OnEnable()
     {
-        noteRecorderEditor = GameObject.Find("/---CONTROLLER---/NoteRecorderEditor").GetComponent<NoteRecorderEditor>();
+        noteRecorder = GameObject.Find("/---CONTROLLER---/NoteRecorder").GetComponent<NoteRecorder>();
 
-        InstatitateListNote();
-    }
-
-    private void InstatitateListNote()
-    {
-        musicSheetRecorded.notes = new List<Note>();
-        musicSheetRecorded.bpm = _bpm;
+        JSONReader.musicSheetInJson.notes = new List<Note>();
+        JSONReader.musicSheetInJson.bpm = _bpm;
     }
 
     void OnGUI()
@@ -80,7 +73,7 @@ public class NoteRecorderEditorWindow : EditorWindow
             Debug.Log("JSON PATH: " + "JsonFiles/" + _jsonImportFileName);
             Debug.Log("JSON LOAD: " + JSONReader.LoadTextFromJsonFile("JsonFiles/" + _jsonImportFileName));
             
-            musicSheetRecorded = JsonUtility.FromJson<MusicSheet>(JSONReader.LoadTextFromJsonFile("JsonFiles/" + _jsonImportFileName));
+            JSONReader.musicSheetInJson = JsonUtility.FromJson<MusicSheet>(JSONReader.LoadTextFromJsonFile("JsonFiles/" + _jsonImportFileName));
             Debug.Log("Json loaded");
         }
         GUILayout.EndHorizontal();
@@ -109,7 +102,7 @@ public class NoteRecorderEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        musicSheetRecorded.musicDurationSecs = EditorGUILayout.FloatField("Music Duration (sec) :", musicSheetRecorded.musicDurationSecs);
+        JSONReader.musicSheetInJson.musicDurationSecs = EditorGUILayout.FloatField("Music Duration (sec) :", JSONReader.musicSheetInJson.musicDurationSecs);
         GUILayout.EndHorizontal();
     }
 
@@ -166,18 +159,18 @@ public class NoteRecorderEditorWindow : EditorWindow
         for (int row = 1; row <= _notesColumn; row++)
         {
 
-            if (GUILayout.Button(musicSheetRecorded.notes.Exists(note => note.moment == timeInterval && note.position == row) ? "X" : "", 
+            if (GUILayout.Button(JSONReader.musicSheetInJson.notes.Exists(note => note.moment == timeInterval && note.position == row) ? "X" : "", 
                 GUILayout.ExpandWidth(false), GUILayout.MaxHeight(labelHeight), GUILayout.MaxWidth(labelWidth)))
             {
-                if (musicSheetRecorded.notes.Exists(note => note.moment == timeInterval && note.position == row))
+                if (JSONReader.musicSheetInJson.notes.Exists(note => note.moment == timeInterval && note.position == row))
                 {
                     Debug.Log(" - Removed Note: [" + timeInterval + "][" + (row) + "]");
-                    musicSheetRecorded.notes.RemoveAll(note => note.moment == timeInterval && note.position == row);
+                    JSONReader.musicSheetInJson.notes.RemoveAll(note => note.moment == timeInterval && note.position == row);
                 }
                 else
                 {
                     Debug.Log(" - Added Note: [" + timeInterval + "][" + (row) + "]");
-                    musicSheetRecorded.notes.Add(new Note()
+                    JSONReader.musicSheetInJson.notes.Add(new Note()
                     {
                         moment = timeInterval,
                         position = row,
@@ -201,10 +194,10 @@ public class NoteRecorderEditorWindow : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("GENERATE JSON", GUILayout.ExpandWidth(false)))
         {
-            musicSheetRecorded.bpm = _bpm;
-            OrderListByNoteMoment(musicSheetRecorded);
+            JSONReader.musicSheetInJson.bpm = _bpm;
+            OrderListByNoteMoment(JSONReader.musicSheetInJson);
             JSONWriter.ExportFile(_jsonExportFileName,
-                        JSONWriter.GenerateJsonString(musicSheetRecorded), 
+                        JSONWriter.GenerateJsonString(JSONReader.musicSheetInJson), 
                         Constants.NOTE_RECORDER_MUSIC_SHEET_JSON);
             Debug.Log("Json created");
         }
@@ -217,15 +210,15 @@ public class NoteRecorderEditorWindow : EditorWindow
         GUILayout.Label("Music Preview Speed: ", GUILayout.ExpandWidth(false), GUILayout.MaxHeight(50), GUILayout.MaxWidth(150));
         if (GUILayout.Button("2X", GUILayout.ExpandWidth(false)))
         {
-            noteRecorderEditor.ChangeMusicSpeed(2);
+            noteRecorder.ChangeMusicSpeed(2);
         }
         if (GUILayout.Button("3X", GUILayout.ExpandWidth(false)))
         {
-            noteRecorderEditor.ChangeMusicSpeed(3);
+            noteRecorder.ChangeMusicSpeed(3);
         }
         if (GUILayout.Button("NORMAL", GUILayout.ExpandWidth(false)))
         {
-            noteRecorderEditor.ChangeMusicSpeed(1);
+            noteRecorder.ChangeMusicSpeed(1);
         }
         GUILayout.EndHorizontal();
     }

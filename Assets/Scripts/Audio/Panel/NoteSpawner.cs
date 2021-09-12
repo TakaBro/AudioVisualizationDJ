@@ -5,14 +5,7 @@ using UnityEngine;
 public class NoteSpawner : MonoBehaviour
 {
     [Range(0f, 5f)]
-    [SerializeField]
-    private float _sampleSensibility;
-    /*[SerializeField]
-    private float _beatTempo;
-    [SerializeField]
-    private bool hasStarted, _hasPrintedIndexRow, _hasPrintedAllRows;*/
-    [SerializeField]
-    private GameObject _notePrefab1, _notePrefab2, _notePrefab3, _notePrefab4;
+    [SerializeField] private float _sampleSensibility;
 
     private float timer;
     private int _rowsIndex, _notesIndex;
@@ -21,9 +14,6 @@ public class NoteSpawner : MonoBehaviour
     {
         _notesIndex = 0;
         timer = 0; 
-        //_hasPrintedIndexRow = false;
-        //_hasPrintedAllRows = false;
-        //_beatTempo = _beatTempo / 60f;
     }
 
     void Update()
@@ -41,27 +31,21 @@ public class NoteSpawner : MonoBehaviour
                     switch (JSONReader.musicSheetInJson.notes[_notesIndex].position)
                     {
                         case 1:
-                            //InstatiateNotePrefab(_notePrefab1);
                             GetFromPool("Note1");
                             break;
                         case 2:
-                            //InstatiateNotePrefab(_notePrefab2);
                             GetFromPool("Note2");
                             break;
                         case 3:
-                            //InstatiateNotePrefab(_notePrefab3);
                             GetFromPool("Note3");
                             break;
                         case 4:
-                            //InstatiateNotePrefab(_notePrefab4);
                             GetFromPool("Note4");
                             break;
                         default:
-                            //Debug.Log(Input.inputString);
                             break;
                     }
                 _notesIndex++;
-                //}
             }
         }
 
@@ -86,7 +70,8 @@ public class NoteSpawner : MonoBehaviour
             InstatiateNotePrefab(_notePrefab4);
         }*/
 
-        switch (Input.inputString)
+        // GENERATE NOTES FROM KEY PRESS
+        /*switch (Input.inputString)
         {
             case "1":
                 //InstatiateNotePrefab(_notePrefab1);
@@ -107,18 +92,6 @@ public class NoteSpawner : MonoBehaviour
             default:
                 //Debug.Log(Input.inputString);
                 break;
-        }
-
-        /*if (!hasStarted)
-        {
-            if (Input.anyKeyDown)
-            {
-                hasStarted = true;
-            }
-        }
-        else
-        {
-            gameObject.GetComponent<RectTransform>().anchoredPosition -= new Vector2(0f, beatTempo * Time.deltaTime);
         }*/
     }
 
